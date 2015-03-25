@@ -56,4 +56,4 @@ target/
 # Intellij IDEA
 .idea
 
-db.sqlite3
+*.sqlite3

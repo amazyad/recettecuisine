@@ -7,6 +7,7 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('sitecuisine.urls', namespace='sitecuisine')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^admin_tools/', include('admin_tools.urls')),
 )
 
 if settings.DEBUG:
