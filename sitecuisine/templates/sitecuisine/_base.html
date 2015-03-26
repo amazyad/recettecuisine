@@ -1,14 +1,14 @@
-{% load static %}
+{% load static  i18n %}
 
 <!DOCTYPE html>
 <html>
-<head lang="en">
+<head>
     <meta charset="UTF-8">
     <title></title>
     <link href="{% static 'sitecuisine/css/bootstrap.min.css' %}" rel='stylesheet'/>
 </head>
 <body>
-{% block contenu %}{% endblock %}
+{% block content %}{% endblock %}
 <script src="{% static 'sitecuisine/js/jquery.min.js' %}"></script>
 <script src="{% static 'sitecuisine/js/bootstrap.min.js' %}"></script>
 </body>

@@ -1,4 +1,6 @@
 {% extends 'sitecuisine/_base.html' %}
-{% block contenu %}
-    <span class="btn btn-primary">Hello world !!</span>
+{% load static i18n %}
+
+{% block content %}
+    {% trans "Hello world !!" %}
 {% endblock %}

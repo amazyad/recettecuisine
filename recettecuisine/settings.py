@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.utils.translation import ugettext_lazy as _
 from configurations import Configuration
 
@@ -55,6 +56,7 @@ class Base(Configuration):
 
     MIDDLEWARE_CLASSES = (
         'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.locale.LocaleMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -86,7 +88,6 @@ class Base(Configuration):
 
     WSGI_APPLICATION = 'recettecuisine.wsgi.application'
 
-
     # Database
     # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
@@ -100,7 +101,7 @@ class Base(Configuration):
     # Internationalization
     # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-    LANGUAGE_CODE = 'en-us'
+    LANGUAGE_CODE = 'fr-fr'
 
     TIME_ZONE = 'UTC'
 
@@ -110,78 +111,86 @@ class Base(Configuration):
 
     USE_TZ = True
 
-    # app static assets
+    LANGUAGES = (
+        ('en', _('English')),
+        ('fr', _('Français')),
+        ('ar', _('Arabic')),
+    )
+
+    LOCALE_PATHS = (
+        os.path.join(BASE_DIR, 'locale'),
+    )  # app static assets
     STATIC_URL = '/static/'
 
-    #  general static assets
+    # general static assets
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "statics"),
     )
 
-    # Logging configuration
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'formatters': {
-            'verbose': {
-                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
-            },
-            'simple': {
-                'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
-            },
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
         },
-        'handlers': {
-            'null': {
-                'level': 'DEBUG',
-                'class': 'logging.NullHandler',
-            },
-            'console': {
-                'level': 'INFO',
-                'class': 'logging.StreamHandler',
-                'formatter': 'simple'
-            },
-            'file': {
-                'level': 'WARNING',
-                'class': 'logging.FileHandler',
-                'filename': 'logs/recettecuisine.log',
-                'formatter': 'simple'
-            }
+        'simple': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
         },
-        'loggers': {
-            'django': {
-                'handlers': ['console', 'file'],
-                'level': 'WARNING',
-                'propagate': False,
-            },
-            'django.security.*': {
-                'handlers': ['console', 'file'],
-                'propagate': False,
-            },
-            'django.request': {
-                'handlers': ['file'],
-                'level': 'WARNING',
-                'propagate': False,
-            },
-            'django.request': {
-                'handlers': ['file'],
-                'level': 'ERROR',
-                'propagate': False,
-            },
-            'django.db.backends': {
-                'handlers': ['file'],
-                'level': 'ERROR',
-                'propagate': False,
-            },
-            'imports': {
-                'handlers': ['console', 'file'],
-                'level': 'INFO',
-                'propagate': False,
-            },
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': 'logs/recettecuisine.log',
+            'formatter': 'simple'
         }
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'django.security.*': {
+            'handlers': ['console', 'file'],
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'WARNING',
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.db.backends': {
+            'handlers': ['file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'imports': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': False,
+        },
     }
+}
 
-    # Grappelli Customization
-    GRAPPELLI_ADMIN_TITLE = _('Admin')
+# Grappelli Customization
+GRAPPELLI_ADMIN_TITLE = _('Admin')
 
 
 class Prod(Base):
