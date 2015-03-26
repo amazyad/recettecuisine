@@ -25,7 +25,7 @@ class Base(Configuration):
     Basic configuration
     """
     SITE_ID = 1
-    
+
     DEBUG = True
     TEMPLATE_DEBUG = True
 
@@ -37,11 +37,6 @@ class Base(Configuration):
     # Application definition
 
     INSTALLED_APPS = (
-        # admin tools
-        'admin_tools',
-        'admin_tools.theming',
-        'admin_tools.menu',
-        'admin_tools.dashboard',
         # default apps
         'django.contrib.sites',
         'django.contrib.admin',
@@ -115,6 +110,68 @@ class Base(Configuration):
 
     STATIC_URL = '/static/'
 
+    # Logging configuration
+    LOGGING = {
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+            },
+            'simple': {
+                'format': '%(levelname)s %(asctime)s %(module)s %(message)s'
+            },
+        },
+        'handlers': {
+            'null': {
+                'level': 'DEBUG',
+                'class': 'logging.NullHandler',
+            },
+            'console': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'simple'
+            },
+            'file': {
+                'level': 'WARNING',
+                'class': 'logging.FileHandler',
+                'filename': 'logs/recettecuisine.log',
+                'formatter': 'simple'
+            }
+        },
+        'loggers': {
+            'django': {
+                'handlers': ['console', 'file'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
+            'django.security.*': {
+                'handlers': ['console', 'file'],
+                'propagate': False,
+            },
+            'django.request': {
+                'handlers': ['file'],
+                'level': 'WARNING',
+                'propagate': False,
+            },
+            'django.request': {
+                'handlers': ['file'],
+                'level': 'ERROR',
+                'propagate': False,
+            },
+            'django.db.backends': {
+                'handlers': ['file'],
+                'level': 'ERROR',
+                'propagate': False,
+            },
+            'imports': {
+                'handlers': ['console', 'file'],
+                'level': 'INFO',
+                'propagate': False,
+            },
+        }
+    }
+
 
 class Prod(Base):
     # Debug configuration
@@ -141,7 +198,7 @@ class Dev(Base):
     ALLOWED_HOSTS = INTERNAL_IPS
     # Django Debug Toolbar
     INSTALLED_APPS = Base.INSTALLED_APPS + ('debug_toolbar', )
-    MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware', ) + Base.MIDDLEWARE_CLASSES
+    MIDDLEWARE_CLASSES = Base.MIDDLEWARE_CLASSES + ('debug_toolbar.middleware.DebugToolbarMiddleware', )
     DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
     DATABASES = {
