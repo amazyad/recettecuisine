@@ -4,7 +4,8 @@ from django.contrib import admin
 
 urlpatterns = patterns(
     '',
-    url(r'^admin/', include(admin.site.urls)),
+    (r'^grappelli/', include('grappelli.urls')),  # grappelli URLS
+    url(r'^admin/', include(admin.site.urls)),  # admin site
     url(r'^', include('sitecuisine.urls', namespace='sitecuisine')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 )

@@ -37,6 +37,8 @@ class Base(Configuration):
     # Application definition
 
     INSTALLED_APPS = (
+        # grappelli admin dashboard
+        'grappelli',
         # default apps
         'django.contrib.sites',
         'django.contrib.admin',
@@ -108,7 +110,13 @@ class Base(Configuration):
 
     USE_TZ = True
 
+    # app static assets
     STATIC_URL = '/static/'
+
+    #  general static assets
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "statics"),
+    )
 
     # Logging configuration
     LOGGING = {
@@ -171,6 +179,9 @@ class Base(Configuration):
             },
         }
     }
+
+    # Grappelli Customization
+    GRAPPELLI_ADMIN_TITLE = _('Admin')
 
 
 class Prod(Base):
